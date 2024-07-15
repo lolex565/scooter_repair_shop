@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main_style.css">
     <title>Document</title>
 </head>
 <body>
+
 <h1>Zgłoszenia</h1>
 <h2><a href="index.php">wszystkie </a><a href="index.php?status=created">utworzone </a><a href="index.php?status=received">odebrane </a><a href="index.php?status=in_progress">w trakcie </a><a href="index.php?status=finished">ukończone</a></h2>
 <h2></h2>
@@ -43,32 +45,32 @@
                 echo "<td>".$row["scooter_frame_number"]."</td>";
                 echo "<td>".$row["date_created"]."</td>";
                 echo "<td>".$row["date_last_change"]."</td>";
-                echo "<td>";
+                echo "<td";
                 switch ($row["status"]) {
                     case "created":
-                        echo "utworzono";
+                        echo " class=\"created\">utworzono";
                         break;
                     case "received";
-                        echo "odebrano";
+                        echo " class=\"received\">odebrano";
                         break;
                     case "in_progress":
-                        echo "w trakcie";
+                        echo " class=\"in_progress\">w trakcie";
                         break;
                     case "finished":
-                        echo "ukończono";
+                        echo " class=\"finished\">ukończono";
                         break;
                     default:
-                        echo $row["status"];
+                        echo ">".$row["status"];
                         break;
                 }
                 echo "</td>";
                 // echo "<td>".$row["status"]."</td>";
-                echo "<td>".$row["description"]."</td>";
+                echo "<td><div class=\"desc\">".$row["description"]."</div></td>";
                 echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"created\"><input type=\"submit\" value=\"zmień\"></form></td>";
                 echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"received\"><input type=\"submit\" value=\"zmień\"></form></td>";
                 echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"in_progress\"><input type=\"submit\" value=\"zmień\"></form></td>";
                 echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"finished\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"submit\" value=\"pokaż do druku\"></form></td>";
+                echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"submit\" value=\"pokaż\"></form></td>";
                 echo "<td><form action=\"edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"submit\" value=\"edytuj\"></form></td>";
                 echo "</tr>";
             }

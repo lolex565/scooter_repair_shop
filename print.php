@@ -4,17 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="main_style.css">
 </head>
 <body>
-<style>
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 10px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
+
 
     
 
@@ -38,7 +31,7 @@ table, th, td {
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 # output table with data
-                echo "<table>";
+                echo "<table id=\"print_table\">";
                 echo "<tr>";
                 echo "<td>Imię</td>";
                 echo "<td>".$row["client_name"]."</td>";
