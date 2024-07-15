@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Lip 15, 2024 at 03:21 PM
+-- Generation Time: Lip 15, 2024 at 04:24 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `simple_repair_shop`
 --
+CREATE DATABASE IF NOT EXISTS `simple_repair_shop` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `simple_repair_shop`;
 
 -- --------------------------------------------------------
 
@@ -27,8 +29,8 @@ SET time_zone = "+00:00";
 -- Struktura tabeli dla tabeli `application`
 --
 
-CREATE TABLE `application` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `application` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `client_name` varchar(20) NOT NULL,
   `client_surname` varchar(40) NOT NULL,
   `client_phone` varchar(9) NOT NULL,
@@ -38,28 +40,9 @@ CREATE TABLE `application` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_last_change` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('created','received','in_progress','finished') NOT NULL DEFAULT 'created',
-  `description` text NOT NULL
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Indeksy dla zrzutów tabel
---
-
---
--- Indeksy dla tabeli `application`
---
-ALTER TABLE `application`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `application`
---
-ALTER TABLE `application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

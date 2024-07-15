@@ -43,6 +43,7 @@
                 echo "<td>".$row["scooter_make"]."</td>";
                 echo "<td>".$row["scooter_model"]."</td>";
                 echo "<td>".$row["scooter_frame_number"]."</td>";
+                //TODO dodaj nazwe dealera
                 echo "<td>".$row["date_created"]."</td>";
                 echo "<td>".$row["date_last_change"]."</td>";
                 echo "<td";
