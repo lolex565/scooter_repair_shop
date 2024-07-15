@@ -78,7 +78,7 @@ table, th, td {
                 echo "</table>";
             }
         } else {
-            echo "0 results";
+            header('Location: index.php');
         }
         $conn->close();
 

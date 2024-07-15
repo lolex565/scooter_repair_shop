@@ -32,7 +32,7 @@
 
         if ($result->num_rows > 0) {
             // output data of each row
-            echo "<table border='1'>"."<tr><th>Imię</th><th>Nazwisko</th><th>Numer Telefonu</th><th>Marka</th><th>model</th><th>Nr ramy</th><th>Data zgłoszenia</th><th>Status</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th></tr>";
+            echo "<table border='1'>"."<tr><th>Imię</th><th>Nazwisko</th><th>Numer Telefonu</th><th>Marka</th><th>model</th><th>Nr ramy</th><th>Data zgłoszenia</th><th>Status</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
             while($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>".$row["client_name"]."</td>";
@@ -68,6 +68,7 @@
                 echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"in_progress\"><input type=\"submit\" value=\"zmień\"></form></td>";
                 echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"finished\"><input type=\"submit\" value=\"zmień\"></form></td>";
                 echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"submit\" value=\"pokaż do druku\"></form></td>";
+                echo "<td><form action=\"edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"submit\" value=\"edytuj\"></form></td>";
                 echo "</tr>";
             }
         } else {

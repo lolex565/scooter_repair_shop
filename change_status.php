@@ -16,9 +16,11 @@
 
     if ($conn->query($sql) === TRUE) {
         echo "Record updated successfully";
+        $conn->close();
         header('Location: index.php?status='.$_POST['new_status']);
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
+        $conn->close();
     }
 
 

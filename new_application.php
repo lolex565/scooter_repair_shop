@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Nowe Zgłoszenie</h1>
+    <h2><a href='index.php'>Powrót</a></h2>
+    <br>
     <form action="add_new_application.php" method="post">
         <table>
             <tr>
