@@ -68,8 +68,30 @@ table, th, td {
                 echo "<td>".$row["date_created"]."</td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>Data edycji</td>";
+                echo "<td>".$row["date_last_change"]."</td>";
+                echo "</tr>";
+                echo "<tr>";
                 echo "<td>Status</td>";
-                echo "<td>".$row["status"]."</td>";
+                echo "<td>";
+                switch ($row["status"]) {
+                    case "created":
+                        echo "utworzono";
+                        break;
+                    case "received";
+                        echo "odebrano";
+                        break;
+                    case "in_progress":
+                        echo "w trakcie";
+                        break;
+                    case "finished":
+                        echo "ukończono";
+                        break;
+                    default:
+                        echo $row["status"];
+                        break;
+                }
+                echo "</td>";
                 echo "</tr>";
                 echo "<tr>";
                 echo "<td>Opis</td>";

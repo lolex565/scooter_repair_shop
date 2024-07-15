@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Lip 15, 2024 at 02:18 PM
+-- Generation Time: Lip 15, 2024 at 03:21 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -36,6 +36,7 @@ CREATE TABLE `application` (
   `scooter_model` varchar(30) NOT NULL,
   `scooter_frame_number` varchar(20) NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_last_change` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('created','received','in_progress','finished') NOT NULL DEFAULT 'created',
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -32,7 +32,7 @@
 
         if ($result->num_rows > 0) {
             // output data of each row
-            echo "<table border='1'>"."<tr><th>Imię</th><th>Nazwisko</th><th>Numer Telefonu</th><th>Marka</th><th>model</th><th>Nr ramy</th><th>Data zgłoszenia</th><th>Status</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
+            echo "<table border='1'>"."<tr><th>Imię</th><th>Nazwisko</th><th>Numer Telefonu</th><th>Marka</th><th>model</th><th>Nr ramy</th><th>Data zgłoszenia</th><th>Data edycji</th><th>Status</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
             while($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>".$row["client_name"]."</td>";
@@ -42,6 +42,7 @@
                 echo "<td>".$row["scooter_model"]."</td>";
                 echo "<td>".$row["scooter_frame_number"]."</td>";
                 echo "<td>".$row["date_created"]."</td>";
+                echo "<td>".$row["date_last_change"]."</td>";
                 echo "<td>";
                 switch ($row["status"]) {
                     case "created":
