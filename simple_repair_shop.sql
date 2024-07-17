@@ -3,10 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Lip 17, 2024 at 09:37 AM
+-- Generation Time: Lip 17, 2024 at 01:07 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -31,8 +32,7 @@ USE `repair_shop`;
 
 CREATE TABLE IF NOT EXISTS `client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(20) NOT NULL,
-  `last_name` varchar(30) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `phone` varchar(18) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
@@ -102,6 +102,7 @@ ALTER TABLE `repair_application`
   ADD CONSTRAINT `repair_application_ibfk_1` FOREIGN KEY (`dealer_id`) REFERENCES `dealer` (`id`),
   ADD CONSTRAINT `repair_application_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),
   ADD CONSTRAINT `repair_application_ibfk_3` FOREIGN KEY (`scooter_id`) REFERENCES `scooter` (`id`);
+SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

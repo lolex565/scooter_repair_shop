@@ -7,18 +7,31 @@
     <link rel="stylesheet" href="main_style.css">
 </head>
 <body>
+    <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "repair_shop";
+
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+    ?>
     <h1>Nowe Zgłoszenie</h1>
     <h2><a href='index.php'>Powrót</a></h2>
     <br>
     <form action="add_new_application.php" method="post">
         <table>
             <tr>
-                <td>Imie klienta</td>
+                <td>Imie i nazwisko klienta</td>
                 <td><input required type="text" name="client_name"></td>
-            </tr>
-            <tr>
-                <td>Nazwisko klienta</td>
-                <td><input required type="text" name="client_surname"></td>
             </tr>
             <tr>
                 <td>Telefon klienta</td>
@@ -34,7 +47,11 @@
             </tr>
             <tr>
                 <td>Numer ramy hulajnogi</td>
-                <td><input required type="text" name="scooter_frame_number"></td>
+                <td><input required list="frame_numbers" name="scooter_frame_number">
+                    <?php
+
+                    ?>
+                </td>
             </tr>
             <tr>
                 <td>Opis usterki</td>

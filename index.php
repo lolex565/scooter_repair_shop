@@ -9,6 +9,38 @@
 <body>
 
 <h1>Zgłoszenia</h1>
+<?php
+if (!isset($_GET['offset'])) {
+    $page_buttons = "<h2><a href=\"index.php?offset=50";
+    if (isset($_GET['status'])) {
+        $status = $_GET['status'];
+        $page_buttons .= "&status=".$status;
+    }
+    $page_buttons .="\">następne 50 zgłoszeń</a></h2>";
+    echo $page_buttons;
+} else {
+    $offset = intval($_GET['offset']);
+    $back = max(0, ($offset-50));
+    $forward = $offset+50;
+    $back_button = "<a href=\"index.php";
+    if ($back > 0 && (isset($_GET['status']))) {
+        $status = $_GET['status'];
+        $back_button .= "?offset=".strval($back)."&status=".$status;
+    } elseif (isset($_GET['status'])) {
+        $status = $_GET['status'];
+        $back_button .= "?status=".$status;
+    }
+    $back_button .= "\"> poprzednie 50 zgłoszeń</a>";
+    $forward_button = "<a href=\"index.php?offset=".strval($forward);
+    if (isset($_GET['status'])) {
+        $status = $_GET['status'];
+        $forward_button .= "&status=".$status;
+    }
+    $forward_button .= "\"> następne 50 zgłoszeń</a>";
+    $page_buttons = "<h2>".$back_button." | ".$forward_button."</h2>";
+    echo $page_buttons;
+}
+?>
 <h2><a href="index.php">wszystkie </a><a href="index.php?status=created">utworzone </a><a href="index.php?status=received">odebrane </a><a href="index.php?status=in_progress">w trakcie </a><a href="index.php?status=finished">ukończone</a></h2>
 <h2></h2>
 <a href='new_application.php'>Dodaj nowe zgłoszenie</a>
@@ -29,22 +61,36 @@
         }
 
         try {
-            $sql = "SELECT `repair_application`.`status`, `client`.`first_name` AS `client_first_name`, `client`.`last_name` AS `client_last_name`, `dealer`.`name` AS `dealer_name`, `scooter`.`make` AS `scooter_make`, `scooter`.`model` AS `scooter_model`, `repair_application`.`date_created`, `repair_application`.`date_changed`, `repair_application`.`description`, `scooter`.`frame_number` AS `scooter_frame_number`, `repair_application`.`id` FROM `repair_application` LEFT JOIN `client` ON `repair_application`.`client_id` = `client`.`id` LEFT JOIN `dealer` ON `repair_application`.`dealer_id` = `dealer`.`id` LEFT JOIN `scooter` ON `repair_application`.`scooter_id` = `scooter`.`id` ";
+            $sql = "SELECT `repair_application`.`status`, `client`.`name` AS `client_name`, `dealer`.`name` AS `dealer_name`, `scooter`.`make` AS `scooter_make`, `scooter`.`model` AS `scooter_model`, `repair_application`.`date_created`, `repair_application`.`date_changed`, `repair_application`.`description`, `scooter`.`frame_number` AS `scooter_frame_number`, `repair_application`.`id` FROM `repair_application` LEFT JOIN `client` ON `repair_application`.`client_id` = `client`.`id` LEFT JOIN `dealer` ON `repair_application`.`dealer_id` = `dealer`.`id` LEFT JOIN `scooter` ON `repair_application`.`scooter_id` = `scooter`.`id` ";
             if (isset($_GET['status'])) {
-                $sql .= "WHERE `repair_application`.`status` LIKE ?; ";
-            } else {
-                $sql .= ";";
+                $sql .= "WHERE `repair_application`.`status` LIKE ?  ";
             }
+            $sql .= " ORDER BY `repair_application`.`id` LIMIT 50";
+            if (isset($_GET['offset'])) {
+                $sql .= " OFFSET ?";
+            }
+            $sql .= " ;";
+
 
             $stmt = $conn->prepare($sql);
-            if (isset($_GET['status'])) {
+            if (isset($_GET['status']) && isset($_GET['offset'])) {
+                $status = $_GET['status'];
+                $offset = $_GET['offset'];
+                $stmt->bind_param("si", $status, $offset);
+            } elseif (isset($_GET['status'])) {
                 $status = $_GET['status'];
                 $stmt->bind_param("s", $status);
+            } elseif (isset($_GET['offset'])) {
+                $offset = $_GET['offset'];
+                $stmt->bind_param("i", $offset);
             }
+            
 
             if ($stmt->execute()) {
-                $stmt->bind_result($application_status, $client_first_name, $client_last_name, $dealer_name, $scooter_make, $scooter_model, $date_created, $date_changed, $description, $frame_number, $application_id);
-
+                // $result = $stmt->get_result();
+                // echo "<h1>".$result->num_rows."</h1>";
+                $stmt->bind_result($application_status, $client_name, $dealer_name, $scooter_make, $scooter_model, $date_created, $date_changed, $description, $frame_number, $application_id);
+                
 
                 echo "<table border='1'>"."<tr><th>Status</th><th>Klient</th><th>Diler</th><th>Hulajnoga</th><th>Numer ramy</th><th>Data zgłoszenia</th><th>Data edycji</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
                 while ($stmt->fetch()) {
@@ -68,7 +114,7 @@
                         break;
                 }
                 echo "</td>";
-                echo "<td>".$client_first_name." ".$client_last_name."</td>";
+                echo "<td>".$client_name."</td>";
                 echo "<td>".$dealer_name."</td>";
                 echo "<td>".$scooter_make." ".$scooter_model."</td>";
                 echo "<td>".$frame_number."</td>";
