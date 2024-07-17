@@ -10,8 +10,8 @@ td {
     max-width: 10em;
     max-height: 3em;
     word-wrap: break-word;
-    overflow: scroll;
-    overflow-y: scroll;
+    overflow: auto;
+    overflow-y: auto;
     text-align: center;
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
@@ -40,6 +40,10 @@ td {
 
 .finished {
     background-color: red;
+}
+
+.unknown {
+    background-color: pink;
 }
 
 table {

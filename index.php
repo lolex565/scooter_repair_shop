@@ -16,7 +16,9 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "simple_repair_shop";
+        $dbname = "repair_shop";
+
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
@@ -25,29 +27,30 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT `application`.* FROM `application`; ";
-        if ($_GET['status'] != "") {
-            $sql = "SELECT `application`.* FROM `application` WHERE `application`.status LIKE \"". $_GET['status']."\"; ";
-        }
-        
-        $result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
-            // output data of each row
-            echo "<table border='1'>"."<tr><th>Imię</th><th>Nazwisko</th><th>Numer Telefonu</th><th>Marka</th><th>model</th><th>Nr ramy</th><th>Data zgłoszenia</th><th>Data edycji</th><th>Status</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
-            while($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>".$row["client_name"]."</td>";
-                echo "<td>".$row["client_surname"]."</td>";
-                echo "<td>".$row["client_phone"]."</td>";
-                echo "<td>".$row["scooter_make"]."</td>";
-                echo "<td>".$row["scooter_model"]."</td>";
-                echo "<td>".$row["scooter_frame_number"]."</td>";
-                //TODO dodaj nazwe dealera
-                echo "<td>".$row["date_created"]."</td>";
-                echo "<td>".$row["date_last_change"]."</td>";
+        try {
+            $sql = "SELECT `repair_application`.`status`, `client`.`first_name` AS `client_first_name`, `client`.`last_name` AS `client_last_name`, `dealer`.`name` AS `dealer_name`, `scooter`.`make` AS `scooter_make`, `scooter`.`model` AS `scooter_model`, `repair_application`.`date_created`, `repair_application`.`date_changed`, `repair_application`.`description`, `scooter`.`frame_number` AS `scooter_frame_number`, `repair_application`.`id` FROM `repair_application` LEFT JOIN `client` ON `repair_application`.`client_id` = `client`.`id` LEFT JOIN `dealer` ON `repair_application`.`dealer_id` = `dealer`.`id` LEFT JOIN `scooter` ON `repair_application`.`scooter_id` = `scooter`.`id` ";
+            if (isset($_GET['status'])) {
+                $sql .= "WHERE `repair_application`.`status` LIKE ?; ";
+            } else {
+                $sql .= ";";
+            }
+
+            $stmt = $conn->prepare($sql);
+            if (isset($_GET['status'])) {
+                $status = $_GET['status'];
+                $stmt->bind_param("s", $status);
+            }
+
+            if ($stmt->execute()) {
+                $stmt->bind_result($application_status, $client_first_name, $client_last_name, $dealer_name, $scooter_make, $scooter_model, $date_created, $date_changed, $description, $frame_number, $application_id);
+
+
+                echo "<table border='1'>"."<tr><th>Status</th><th>Klient</th><th>Diler</th><th>Hulajnoga</th><th>Numer ramy</th><th>Data zgłoszenia</th><th>Data edycji</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
+                while ($stmt->fetch()) {
+                    echo "<tr>";
                 echo "<td";
-                switch ($row["status"]) {
+                switch ($application_status) {
                     case "created":
                         echo " class=\"created\">utworzono";
                         break;
@@ -61,23 +64,47 @@
                         echo " class=\"finished\">ukończono";
                         break;
                     default:
-                        echo ">".$row["status"];
+                        echo " class=\"unknown\">".$application_status;
                         break;
                 }
                 echo "</td>";
-                // echo "<td>".$row["status"]."</td>";
-                echo "<td><div class=\"desc\">".$row["description"]."</div></td>";
-                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"created\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"received\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"in_progress\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"hidden\" name=\"new_status\" value=\"finished\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"submit\" value=\"pokaż\"></form></td>";
-                echo "<td><form action=\"edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$row["id"]."><input type=\"submit\" value=\"edytuj\"></form></td>";
+                echo "<td>".$client_first_name." ".$client_last_name."</td>";
+                echo "<td>".$dealer_name."</td>";
+                echo "<td>".$scooter_make." ".$scooter_model."</td>";
+                echo "<td>".$frame_number."</td>";
+                echo "<td>".$date_created."</td>";
+                echo "<td>".$date_changed."</td>";
+                echo "<td><div class=\"desc\">".$description."</div></td>";
+                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$application_id."><input type=\"hidden\" name=\"new_status\" value=\"created\"><input type=\"submit\" value=\"zmień\"></form></td>";
+                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$application_id."><input type=\"hidden\" name=\"new_status\" value=\"received\"><input type=\"submit\" value=\"zmień\"></form></td>";
+                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$application_id."><input type=\"hidden\" name=\"new_status\" value=\"in_progress\"><input type=\"submit\" value=\"zmień\"></form></td>";
+                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$application_id."><input type=\"hidden\" name=\"new_status\" value=\"finished\"><input type=\"submit\" value=\"zmień\"></form></td>";
+                echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$application_id."><input type=\"submit\" value=\"pokaż\"></form></td>";
+                echo "<td><form action=\"edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=".$application_id."><input type=\"submit\" value=\"edytuj\"></form></td>";
                 echo "</tr>";
+                }
+                echo "</table>";
+
+                $stmt->close();
+                $conn->close();
+                
+                exit(); // Make sure to exit after the header redirection
+            } else {
+                $error_message = urlencode($stmt->error);
+                $stmt->close();
+                $conn->close();
+                header('Location: error.php?code=500&message='.$error_message);
+                exit(); // Make sure to exit after the header redirection
             }
-        } else {
-            echo "<h1>0 results</h1>";
+
+        } catch (mysqli_sql_exception $e) {
+            $error_message = urlencode($e->getMessage());
+            $conn->close();
+            header('Location: error.php?code=500&message='.$error_message);
+            exit(); // Make sure to exit after the header redirection
         }
+
+        
         $conn->close();
     ?>
 </body>
