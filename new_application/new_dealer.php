@@ -9,8 +9,8 @@
 <body>
     <?php
 
-    if (!isset($_POST['scooter_make']) || !isset($_POST['scooter_model']) || !isset($_POST['frame_number'])) {
-        header('Location: scooter_chooser.php');
+    if (!isset($_POST['dealer_name']) || !isset($_POST['dealer_phone'])) {
+        header('Location: dealer_chooser.php');
         exit();
     }
 
@@ -19,11 +19,17 @@
         exit();
     }
 
+    if (!isset($_POST['scooter_id'])) {
+        header('Location: scooter_chooser.php');
+        exit();
+    }
+
     $client_id = $_POST['client_id'];
 
-    $scooter_make = $_POST['scooter_make'];
-    $scooter_model = $_POST['scooter_model'];
-    $frame_number = $_POST['frame_number'];
+    $scooter_id = $_POST['scooter_id'];
+
+    $dealer_name = $_POST['dealer_name'];
+    $dealer_phone = $_POST['dealer_phone'];
 
     $servername = "localhost";
     $username = "root";
@@ -44,22 +50,23 @@
             exit(); // Make sure to exit after the header redirection
         }
 
-        $stmt = $conn->prepare("INSERT INTO `scooter` (`make`, `model`, `frame_number`) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO `dealer` (`name`, `phone`) VALUES (?, ?)");
 
-        $stmt->bind_param("sss", $scooter_make, $scooter_model, $frame_number);
+        $stmt->bind_param("ss", $dealer_name, $dealer_phone);
 
         $stmt->execute();
 
-        $scooter_id = $stmt->insert_id;
+        $dealer_id = $stmt->insert_id;
 
         $stmt->close();
 
         $conn->close();
 
-        echo "<h1>Pomyślnie dodano hulajnogę: ".$scooter_make." ".$scooter_model." ".$frame_number."</h1>";
-        echo "<form action='dealer_chooser.php' method='post'>";
+        echo "<h1>Pomyślnie dodano Dealera: ".$dealer_name." ".$dealer_phone."</h1>";
+        echo "<form action='new_application.php' method='post'>";
         echo "<input type='hidden' name='client_id' value='".$client_id."'>";
         echo "<input type='hidden' name='scooter_id' value='".$scooter_id."'>";
+        echo "<input type='hidden' name='dealer_id' value='".$dealer_id."'>";
         echo "<input type='submit' value='Dalej'>";
         echo "</form>";
 

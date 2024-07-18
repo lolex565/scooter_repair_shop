@@ -88,11 +88,9 @@ try {
         }
     } else {
         echo "Required parameter 'id' is missing.";
-        $conn->close();
     }
 } catch (mysqli_sql_exception $e) {
     $error_message = urlencode($e->getMessage());
-    $conn->close();
     header('Location: error.php?code=500&message='.$error_message);
     exit(); // Exit after the header redirection
 }

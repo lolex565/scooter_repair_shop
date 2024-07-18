@@ -36,16 +36,17 @@
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
-                    echo "<select id='clients' name='client_id'>";
+                    echo "<input list='clients' name='client_id'>";
+                    echo "<datalist id='clients'>";
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
-                            echo "<option value='".$row["id"]."'>".$row['name']." ".$row['phone']."</option>";
+                            echo "<option value='".$row["id"]."' label='".$row['name']." ".$row['phone']."'>";
                         }
                     }
-                    echo "</select>";
+                    echo "</datalist>";
+                    echo "</input>";
                 } catch (mysqli_sql_exception $e) {
                     $error_message = urlencode($e->getMessage());
-                    $conn->close();
                     header('Location: error.php?code=500&message='.$error_message);
                     exit(); // Make sure to exit after the header redirection
                 }
