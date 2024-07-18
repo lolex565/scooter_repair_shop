@@ -46,7 +46,7 @@
         // Check connection
         if ($conn->connect_error) {
             $error_message = urlencode($conn->connect_error);
-            header('Location: ../error.php?code=500&message='.$error_message);
+            header('Location: ..//error.php?code=500&message='.$error_message);
             exit(); // Make sure to exit after the header redirection
         }
 
@@ -74,7 +74,7 @@
 
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
-        header('Location: ../error.php?code=500&message='.$error_message);
+        header('Location: ..//error.php?code=500&message='.$error_message);
         exit(); // Make sure to exit after the header redirection
     }
 

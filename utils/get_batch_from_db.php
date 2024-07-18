@@ -30,7 +30,7 @@ function get_clients(){
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
 
-        header('Location: error.php?code=500&message=' . $error_message);
+        header('Location: /error.php?code=500&message=' . $error_message);
         exit(); // Make sure to exit after the header redirection
     }
 }
@@ -65,7 +65,7 @@ function get_scooters(){
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
 
-        header('Location: error.php?code=500&message=' . $error_message);
+        header('Location: /error.php?code=500&message=' . $error_message);
         exit(); // Make sure to exit after the header redirection
     }
 }
@@ -100,12 +100,12 @@ function get_dealers(){
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
 
-        header('Location: error.php?code=500&message=' . $error_message);
+        header('Location: /error.php?code=500&message=' . $error_message);
         exit(); // Make sure to exit after the header redirection
     }
 }
 
-function get_applications($status = null){
+function get_full_applications(string $status = null,int $rows = 50,int $offset = 0){
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -123,14 +123,15 @@ function get_applications($status = null){
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "SELECT `application`.* FROM `application`"; 
+        $sql = "SELECT `repair_application`.`id` AS `application_id`, `repair_application`.`status` AS `application_status`, `repair_application`.`date_created` AS `application_date_created`, `repair_application`.`date_changed` AS `application_date_changed`, `repair_application`.`description` AS `application_description`, `client`.`id` AS `client_id`, `client`.`name` AS `client_name`, `client`.`phone` AS `client_phone`, `scooter`.`id` AS `scooter_id`, `scooter`.`make` AS `scooter_make`, `scooter`.`model` AS `scooter_model`, `scooter`.`frame_number` AS `scooter_frame_number`, `dealer`.`id` AS `dealer_id`, `dealer`.`name` AS `dealer_name`, `dealer`.`phone` AS `dealer_phone` FROM `repair_application` LEFT JOIN `client` ON `repair_application`.`client_id` = `client`.`id` LEFT JOIN `scooter` ON `repair_application`.`scooter_id` = `scooter`.`id` LEFT JOIN `dealer` ON `repair_application`.`dealer_id` = `dealer`.`id`"; 
         if($status != "" || $status != null){
-            $sql .= " WHERE `application`.`status` = ?;";
+            $sql .= " WHERE `repair_application`.`status` = ? ORDER BY `repair_application`.`id` LIMIT ? OFFSET ?;";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("s", $status);
+            $stmt->bind_param("sii", $status, $rows, $offset);
         } else {
-            $sql .= ";";
+            $sql .= " ORDER BY `repair_application`.`id` LIMIT ? OFFSET ?;";
             $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $rows, $offset);
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -142,7 +143,7 @@ function get_applications($status = null){
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
 
-        header('Location: error.php?code=500&message=' . $error_message);
+        header('Location: /error.php?code=500&message=' . $error_message);
         exit(); // Make sure to exit after the header redirection
     }
 }

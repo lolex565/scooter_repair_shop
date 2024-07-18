@@ -10,6 +10,7 @@
     <h1>Nowe Zgłoszenie</h1>
     <form action="add_new_application.php" method="post">
         <?php
+            include('../utils/get_by_id_from_db.php');
             if (!isset($_POST['client_id']) && !isset($_GET['client_id'])) {
                 header('Location: client_chooser.php');
                 exit();
@@ -62,8 +63,72 @@
             echo "<input type='hidden' name='scooter_id' value='".$scooter_id."'>";
             echo "<input type='hidden' name='dealer_id' value='".$dealer_id."'>";
 
+            $client_data = get_client_by_id($client_id);
+            $scooter_data = get_scooter_by_id($scooter_id);
+            $dealer_data = get_dealer_by_id($dealer_id);
+
         ?>
         <table>
+            <tr>
+                <td>
+                    Klient
+                </td>
+                <td>
+                    <?php
+                        echo $client_data['name'];
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Telefon klienta
+                </td>
+                <td>
+                    <?php
+                        echo $client_data['phone'];
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Hulajnoga
+                </td>
+                <td>
+                    <?php
+                        echo $scooter_data['make']." ".$scooter_data['model'];
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Numer ramy
+                </td>
+                <td>
+                    <?php
+                        echo $scooter_data['frame_number'];
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dealer
+                </td>
+                <td>
+                    <?php
+                        echo $dealer_data['name'];
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Telefon dealera
+                </td>
+                <td>
+                    <?php
+                        echo $dealer_data['phone'];
+                    ?>
+                </td>
+            </tr>
             <tr>
                 <td>
                     Data zgłoszenia
@@ -77,7 +142,12 @@
                     Opis usterki
                 </td>
                 <td>
-                    <textarea name="description" id="" cols="30" rows="10"></textarea>
+                    <textarea required name="description" id="" cols="30" rows="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Złóż zgłoszenie">
                 </td>
             </tr>
 

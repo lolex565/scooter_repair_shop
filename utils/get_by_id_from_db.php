@@ -27,11 +27,13 @@ function get_client_by_id($client_id)
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             return $result->fetch_assoc();
+        } else {
+            throw new Exception("No client with id: ".$client_id." found", 1);
         }
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
 
-        header('Location: error.php?code=500&message=' . $error_message);
+        header('Location: /error.php?code=500&message=' . $error_message);
         exit(); // Make sure to exit after the header redirection
     }
 }
@@ -63,11 +65,13 @@ function get_scooter_by_id($scooter_id)
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             return $result->fetch_assoc();
+        } else {
+            throw new Exception("No scooter with id: ".$scooter_id." found", 1);
         }
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
 
-        header('Location: error.php?code=500&message=' . $error_message);
+        header('Location: /error.php?code=500&message=' . $error_message);
         exit(); // Make sure to exit after the header redirection
     }
 }
@@ -99,11 +103,13 @@ function get_dealer_by_id($dealer_id)
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             return $result->fetch_assoc();
+        } else {
+            throw new Exception("No dealer with id: ".$dealer_id." found", 1);
         }
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
 
-        header('Location: error.php?code=500&message=' . $error_message);
+        header('Location: /error.php?code=500&message=' . $error_message);
         exit(); // Make sure to exit after the header redirection
     }
 }
@@ -135,11 +141,14 @@ function get_application_by_id($application_id)
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             return $result->fetch_assoc();
+        } else {
+            throw new Exception("No application with id: ".$application_id." found", 1);
+            
         }
     } catch (mysqli_sql_exception $e) {
         $error_message = urlencode($e->getMessage());
 
-        header('Location: error.php?code=500&message=' . $error_message);
+        header('Location: //error.php?code=500&message=' . $error_message);
         exit(); // Make sure to exit after the header redirection
     }
 }
