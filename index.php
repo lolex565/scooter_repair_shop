@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-8">
@@ -11,102 +11,133 @@
 <body>
 
     <h1>Zgłoszenia</h1>
-    <?php
-    if (!isset($_GET['offset'])) {
-        $page_buttons = "<h2><a href=\"index.php?offset=50";
-        if (isset($_GET['status'])) {
-            $status = $_GET['status'];
-            $page_buttons .= "&status=" . $status;
-        }
-        $page_buttons .= "\">następne 50 zgłoszeń</a></h2>";
-        echo $page_buttons;
-    } else {
-        $offset = intval($_GET['offset']);
-        $back = max(0, ($offset - 50));
-        $forward = $offset + 50;
-        $back_button = "<a href=\"index.php";
-        if ($back > 0 && (isset($_GET['status']))) {
-            $status = $_GET['status'];
-            $back_button .= "?offset=" . strval($back) . "&status=" . $status;
-        } elseif (isset($_GET['status'])) {
-            $status = $_GET['status'];
-            $back_button .= "?status=" . $status;
-        }
-        $back_button .= "\"> poprzednie 50 zgłoszeń</a>";
-        $forward_button = "<a href=\"index.php?offset=" . strval($forward);
-        if (isset($_GET['status'])) {
-            $status = $_GET['status'];
-            $forward_button .= "&status=" . $status;
-        }
-        $forward_button .= "\"> następne 50 zgłoszeń</a>";
-        $page_buttons = "<h2>" . $back_button . " | " . $forward_button . "</h2>";
-        echo $page_buttons;
-    }
-    ?>
-    <h2><a href="index.php">wszystkie </a><a href="index.php?status=created">utworzone </a><a href="index.php?status=received">odebrane </a><a href="index.php?status=in_progress">w trakcie </a><a href="index.php?status=finished">ukończone</a></h2>
-    <h2></h2>
-    <a href='/new_application/'>Dodaj nowe zgłoszenie</a>
 
-    <?php
-        include('utils/get_batch_from_db.php');
-
-        if (isset($_GET['offset'])) {
-            $offset = intval($_GET['offset']);
-        } else {
-            $offset = 0;
-        }
-
-        if (isset($_GET['status'])) {
-            $status = $_GET['status'];
-        } else {
-            $status = "";
-        }
-
-        $applications = get_full_applications($status, 50,$offset);
-
-        if (count($applications) > 0) {
-            echo "<table border='1'>" . "<tr><th>Status</th><th>Klient</th><th>Diler</th><th>Hulajnoga</th><th>Numer ramy</th><th>Data zgłoszenia</th><th>Data edycji</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
-
-            foreach ($applications as $i => $application) {
-                echo "<tr>";
-                echo "<td";
-                switch ($application['application_status']) {
-                    case "created":
-                        echo " class=\"created\">utworzono";
-                        break;
-                    case "received";
-                        echo " class=\"received\">odebrano";
-                        break;
-                    case "in_progress":
-                        echo " class=\"in_progress\">w trakcie";
-                        break;
-                    case "finished":
-                        echo " class=\"finished\">ukończono";
-                        break;
-                    default:
-                        echo " class=\"unknown\">" . $application['application_status'];
-                        break;
+    <table>
+        <tr>
+            <?php
+            if (!isset($_GET['offset'])) {
+                $page_buttons = "<td colspan=5><a href=\"index.php?offset=50";
+                if (isset($_GET['status'])) {
+                    $status = $_GET['status'];
+                    $page_buttons .= "&status=" . $status;
                 }
-                echo "</td>";
-                echo "<td>" . $application['client_name'] . "</td>";
-                echo "<td>" . $application['dealer_name'] . "</td>";
-                echo "<td>" . $application['scooter_make'] . " " . $application['scooter_model'] . "</td>";
-                echo "<td>" . $application['scooter_frame_number'] . "</td>";
-                echo "<td>" . $application['application_date_created'] . "</td>";
-                echo "<td>" . $application['application_date_changed'] . "</td>";
-                echo "<td><div class=\"desc\">" . $application['application_description'] . "</div></td>";
-                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"created\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"received\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"in_progress\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"finished\"><input type=\"submit\" value=\"zmień\"></form></td>";
-                echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"pokaż\"></form></td>";
-                echo "<td><form action=\"edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"edytuj\"></form></td>";
-                echo "</tr>";
+                $page_buttons .= "\">następne 50 zgłoszeń</a></td>";
+                echo $page_buttons;
+            } else {
+                $offset = intval($_GET['offset']);
+                $back = max(0, ($offset - 50));
+                $forward = $offset + 50;
+                $back_button = "<td colspan=2><a href=\"index.php";
+                if ($back > 0 && (isset($_GET['status']))) {
+                    $status = $_GET['status'];
+                    $back_button .= "?offset=" . strval($back) . "&status=" . $status;
+                } elseif (isset($_GET['status'])) {
+                    $status = $_GET['status'];
+                    $back_button .= "?status=" . $status;
+                }
+                $back_button .= "\">poprzednie 50 zgłoszeń</a></td>";
+                $middle_button = "<td><a href=\"index.php";
+                if (isset($_GET['status'])) {
+                    $status = $_GET['status'];
+                    $middle_button .= "?status=" . $status;
+                }
+                $middle_button .= "\">powrót do początku kategorii</a></td>";
+                $forward_button = "<td colspan=2><a href=\"index.php?offset=" . strval($forward);
+                if (isset($_GET['status'])) {
+                    $status = $_GET['status'];
+                    $forward_button .= "&status=" . $status;
+                }
+                $forward_button .= "\">następne 50 zgłoszeń</a></td>";
+                $page_buttons = $back_button . $middle_button . $forward_button;
+                echo $page_buttons;
             }
-            echo "</table>";
-        } else {
-            echo "<h2>brak wyników</h2>";
+            ?>
+        </tr>
+        <tr>
+            <td>
+                <a href="index.php">wszystkie </a>
+            </td>
+            <td>
+                <a href="index.php?status=created">utworzone </a>
+            </td>
+            <td>
+                <a href="index.php?status=received">odebrane </a>
+            </td>
+            <td>
+                <a href="index.php?status=in_progress">w trakcie </a>
+            </td>
+            <td>
+                <a href="index.php?status=finished">ukończone</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=5>
+                <a href='/new_application/'>Dodaj nowe zgłoszenie</a>
+            </td>
+        </tr>
+    </table>
+
+
+    <?php
+    include('utils/get_batch_from_db.php');
+
+    if (isset($_GET['offset'])) {
+        $offset = intval($_GET['offset']);
+    } else {
+        $offset = 0;
+    }
+
+    if (isset($_GET['status'])) {
+        $status = $_GET['status'];
+    } else {
+        $status = "";
+    }
+
+    $applications = get_full_applications($status, 50, $offset);
+
+    if (count($applications) > 0) {
+        echo "<table border='1'>" . "<tr><th>Status</th><th>Klient</th><th>Diler</th><th>Hulajnoga</th><th>Numer ramy</th><th>Data zgłoszenia</th><th>Data edycji</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
+
+        foreach ($applications as $i => $application) {
+            echo "<tr>";
+            echo "<td";
+            switch ($application['application_status']) {
+                case "created":
+                    echo " class=\"created\">utworzono";
+                    break;
+                case "received";
+                    echo " class=\"received\">odebrano";
+                    break;
+                case "in_progress":
+                    echo " class=\"in_progress\">w trakcie";
+                    break;
+                case "finished":
+                    echo " class=\"finished\">ukończono";
+                    break;
+                default:
+                    echo " class=\"unknown\">" . $application['application_status'];
+                    break;
+            }
+            echo "</td>";
+            echo "<td>" . $application['client_name'] . "</td>";
+            echo "<td>" . $application['dealer_name'] . "</td>";
+            echo "<td>" . $application['scooter_make'] . " " . $application['scooter_model'] . "</td>";
+            echo "<td>" . $application['scooter_frame_number'] . "</td>";
+            echo "<td>" . $application['application_date_created'] . "</td>";
+            echo "<td>" . $application['application_date_changed'] . "</td>";
+            echo "<td><div class=\"desc\">" . $application['application_description'] . "</div></td>";
+            echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"created\"><input type=\"submit\" value=\"zmień\"></form></td>";
+            echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"received\"><input type=\"submit\" value=\"zmień\"></form></td>";
+            echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"in_progress\"><input type=\"submit\" value=\"zmień\"></form></td>";
+            echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"finished\"><input type=\"submit\" value=\"zmień\"></form></td>";
+            echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"pokaż\"></form></td>";
+            echo "<td><form action=\"edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"edytuj\"></form></td>";
+            echo "</tr>";
         }
+        echo "</table>";
+    } else {
+        echo "<h2>brak wyników</h2>";
+    }
 
 
     ?>
