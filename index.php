@@ -9,6 +9,12 @@
 </head>
 
 <body>
+    <?php
+        require('utils/is_logged_in.php');
+        echo "<h1>Witaj ".$_SESSION['username']."</h1>";
+    ?>
+    
+    <a href="logout.php">Wyloguj</a>
 
     <h1>Zgłoszenia</h1>
 
