@@ -77,6 +77,8 @@
         </tr>
     </table>
 
+    <br>
+
 
     <?php
     include('utils/get_batch_from_db.php');
