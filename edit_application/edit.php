@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="main_style.css">
+    <link rel="stylesheet" href="../main_style.css">
 </head>
 <body>
     <h1>Edycja Zgłoszenia</h1>
@@ -39,8 +39,12 @@
 
                 if ($application != NULL){
                     echo "<tr>";
-
+                    echo "<td>Id:</td>";
+                    echo "<td>".$application['application_id']."</td>";
                     echo "</tr>";
+                    echo "<tr>";
+                    echo "<td>Klient:</td>";
+                    echo "<td><input type='hidden' name='client_id' value='".$application['client_id']."' readonly>".$application['client_name']."</td>";
                 }
                 
             } catch (Exception $e) {

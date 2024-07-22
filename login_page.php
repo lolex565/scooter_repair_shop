@@ -11,7 +11,12 @@
         require('utils/is_logged_in_login_pages.php');
     ?>
     <h1>Zaloguj się</h1>
-    <form action="/login.php" method="post">
+    <?php
+        if (isset($_GET['message'])) {
+            echo "<h2>".$_GET['message']."</h2>";
+        }
+    ?>
+    <form action="login.php" method="post">
         <label for="login">Login:</label>
         <input type="text" name="login" id="login">
         <label for="password">Hasło:</label>

@@ -11,7 +11,7 @@
         require('utils/is_logged_in_login_pages.php');
     ?>
     <h1>Zarejestruj się</h1>
-    <form action="/register.php" method="post">
+    <form action="register.php" method="post">
         <label for="login">Login:</label>
         <input type="text" name="login" id="login">
         <label for="password">Hasło:</label>

@@ -42,6 +42,15 @@
                 "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
                 "uriFormat": "http://localhost:%s",
                 "action": "openExternally"
+            },
+            "env": {
+                "APP_ENV": "DEBUG", //DEBUG or PROD
+                "DB_HOST": "localhost",
+                "DB_PORT": "3306",
+                "DB_USER": "root",
+                "DB_PASSWORD": "",
+                "DB_NAME": "repair_shop",
+                "APP_HOST": "http://localhost:2137/"
             }
         }
     ]

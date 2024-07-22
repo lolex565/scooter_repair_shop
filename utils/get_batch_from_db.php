@@ -75,6 +75,7 @@ function get_dealers(){
     $username = "root";
     $password = "";
     $dbname = "repair_shop";
+    
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -106,10 +107,12 @@ function get_dealers(){
 }
 
 function get_full_applications(string $status = null,int $rows = 50,int $offset = 0){
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "repair_shop";
+    // $servername = getenv('DB_HOST');
+    // $username = getenv('DB_USER');
+    // $password = getenv('DB_PASSWORD');
+    // $dbname = getenv('DB_NAME');
+
+    require('get_db_conf.php');
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
