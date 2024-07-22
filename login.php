@@ -45,6 +45,7 @@ try {
         ]);
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
+        $_SESSION['is_admin'] = $user['is_admin'];
         header('Location: index.php');
         exit();
     } else {

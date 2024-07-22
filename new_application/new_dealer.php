@@ -8,6 +8,7 @@
 </head>
 <body>
     <?php
+    require('../utils/is_logged_in.php');
 
     if (!isset($_POST['dealer_name']) || !isset($_POST['dealer_phone'])) {
         header('Location: dealer_chooser.php');

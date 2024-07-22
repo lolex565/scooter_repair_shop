@@ -10,6 +10,7 @@
     <h1>Nowe Zgłoszenie</h1>
     <form action="add_new_application.php" method="post">
         <?php
+            require('../utils/is_logged_in.php');
             include('../utils/get_by_id_from_db.php');
             if (!isset($_POST['client_id']) && !isset($_GET['client_id'])) {
                 header('Location: client_chooser.php');

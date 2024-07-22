@@ -7,6 +7,8 @@
 </head>
 <body>
     <?php
+        require('../utils/is_logged_in.php');
+
         if (!isset($_POST['client_id'])) {
             header("Location :client_chooser.php");
         }

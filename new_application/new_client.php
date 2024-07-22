@@ -12,7 +12,7 @@
 </html>
 
 <?php
-
+    require('../utils/is_logged_in.php');
     if (!isset($_POST['client_name']) || !isset($_POST['client_phone'])) {
         header('Location: client_chooser.php');
         exit();

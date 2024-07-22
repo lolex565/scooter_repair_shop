@@ -12,6 +12,8 @@
     <form action="scooter_chooser.php" method="post">
         
             <?php
+                require('../utils/is_logged_in.php');
+
                 $servername = "localhost";
                 $username = "root";
                 $password = "";

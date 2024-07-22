@@ -13,6 +13,8 @@
     <h2>Wybierz Dealera</h2>
     <form action="new_application.php" method="post">
         <?php
+        require('../utils/is_logged_in.php');
+
         $servername = "localhost";
         $username = "root";
         $password = "";

@@ -8,6 +8,8 @@
 <body>
 <?php
 
+require('utils/is_logged_in.php');
+
 $servername = "localhost";
 $username = "root";
 $password = "";

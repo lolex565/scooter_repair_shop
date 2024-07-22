@@ -11,7 +11,10 @@
 <body>
     <?php
         require('utils/is_logged_in.php');
-        echo "<h1>Witaj ".$_SESSION['username']."</h1>";
+        echo "<h1>Witaj ".htmlspecialchars($_SESSION['username'])."</h1>";
+        if ($_SESSION['is_admin']) {
+            echo "<h1>Masz uprawnienia admina</h1>";
+        }
     ?>
     
     <a href="logout.php">Wyloguj</a>
@@ -139,7 +142,7 @@
             echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"in_progress\"><input type=\"submit\" value=\"zmień\"></form></td>";
             echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"finished\"><input type=\"submit\" value=\"zmień\"></form></td>";
             echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"pokaż\"></form></td>";
-            echo "<td><form action=\"edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"edytuj\"></form></td>";
+            echo "<td><form action=\"/edit_application/edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"edytuj\"></form></td>";
             echo "</tr>";
         }
         echo "</table>";

@@ -8,6 +8,7 @@
 </head>
 <body>
     <?php
+    require('../utils/is_logged_in.php');
 
     if (!isset($_POST['scooter_make']) || !isset($_POST['scooter_model']) || !isset($_POST['frame_number'])) {
         header('Location: scooter_chooser.php');
