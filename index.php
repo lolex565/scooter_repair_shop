@@ -111,7 +111,11 @@
     $applications = get_full_applications($status, 50, $offset);
 
     if (count($applications) > 0) {
-        echo "<table border='1'>" . "<tr><th>Status</th><th>Klient</th><th>Diler</th><th>Hulajnoga</th><th>Numer ramy</th><th>Data zgłoszenia</th><th>Data edycji</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th></tr>";
+        echo "<table border='1'>" . "<tr><th>Status</th><th>Klient</th><th>Diler</th><th>Hulajnoga</th><th>Numer ramy</th><th>Data zgłoszenia</th><th>Data edycji</th><th>Opis</th><th>zmień status na utworzone</th><th>zmień status na odebrane</th><th> zmień status na w trakcie</th><th>zmień status na zakończone</th><th>pokaż do druku</th><th>Edytuj</th>";
+        if ($_SESSION['is_admin']) {
+            echo "<th>Usuń</th>";
+        }
+        echo "</tr>";
 
         foreach ($applications as $i => $application) {
             echo "<tr>";
@@ -147,6 +151,9 @@
             echo "<td><form action=\"change_status.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"hidden\" name=\"new_status\" value=\"finished\"><input type=\"submit\" value=\"zmień\"></form></td>";
             echo "<td><form action=\"print.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"pokaż\"></form></td>";
             echo "<td><form action=\"/edit_application/edit.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"edytuj\"></form></td>";
+            if ($_SESSION['is_admin']) {
+                echo "<td><form action=\"/delete_application/delete_application_page.php\" method=\"POST\"><input type=\"hidden\" name=\"id\" value=" . $application['application_id'] . "><input type=\"submit\" value=\"usuń\"></form></td>";
+            }
             echo "</tr>";
         }
         echo "</table>";

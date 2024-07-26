@@ -2,10 +2,7 @@
 
 function get_client_by_id($client_id)
 {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "repair_shop";
+    require('get_db_conf.php');
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -40,10 +37,7 @@ function get_client_by_id($client_id)
 
 function get_scooter_by_id($scooter_id)
 {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "repair_shop";
+    require('get_db_conf.php');
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -78,10 +72,7 @@ function get_scooter_by_id($scooter_id)
 
 function get_dealer_by_id($dealer_id)
 {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "repair_shop";
+    require('get_db_conf.php');
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -116,10 +107,7 @@ function get_dealer_by_id($dealer_id)
 
 function get_application_by_id($application_id)
 {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "repair_shop";
+    require('get_db_conf.php');
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

@@ -1,9 +1,7 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "simple_repair_shop";
+include('../utils/is_logged_in.php');
+include('../utls/get_db_conf.php');
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
