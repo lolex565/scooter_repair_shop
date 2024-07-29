@@ -26,10 +26,7 @@
     $scooter_model = $_POST['scooter_model'];
     $frame_number = $_POST['frame_number'];
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "repair_shop";
+    include('../utils/get_db_conf.php');
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

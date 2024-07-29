@@ -10,10 +10,7 @@
 
 require('utils/is_logged_in.php');
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "repair_shop";
+include('../utils/get_db_conf.php');
 
 // Enable exception mode for mysqli
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
