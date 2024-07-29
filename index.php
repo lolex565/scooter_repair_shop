@@ -10,6 +10,15 @@
 
 <body>
     <?php
+        $env = file_get_contents(__DIR__."/Directory/.env");
+        $lines = explode("\n",$env);
+        
+        foreach($lines as $line){
+          preg_match("/([^#]+)\=(.*)/",$line,$matches);
+          if(isset($matches[2])){
+            putenv(trim($line));
+          }
+        } 
         require('utils/is_logged_in.php');
         echo "<h1>Witaj ".htmlspecialchars($_SESSION['username'])."</h1>";
         if (getenv('APP_ENV') && $_SESSION['is_admin']) {
