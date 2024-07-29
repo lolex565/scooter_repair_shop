@@ -10,7 +10,7 @@
 
 <body>
     <?php
-        $env = file_get_contents(__DIR__."/Directory/.env");
+        $env = file_get_contents(".env");
         $lines = explode("\n",$env);
         
         foreach($lines as $line){
