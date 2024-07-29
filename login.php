@@ -33,7 +33,7 @@ try {
     if ($user == null) {
         $msg = "zły login lub nieaktywne konto";
         $encoded_msg = urlencode($msg);
-        header('Location: '.getenv('APP_HOST').'login_page.php?message='.$encoded_msg);
+        header('Location: login_page.php?message='.$encoded_msg);
         exit();
     }
 
@@ -45,16 +45,16 @@ try {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['is_admin'] = $user['is_admin'];
-        header('Location: '.getenv('APP_HOST').'index.php');
+        header('Location: index.php');
         exit();
     } else {
         $msg = "złe hasło";
         $encoded_msg = urlencode($msg);
-        header('Location: '.getenv('APP_HOST').'login_page.php?message='.$encoded_msg);
+        header('Location: login_page.php?message='.$encoded_msg);
         exit();
     }
 } catch (mysqli_sql_exception $e) {
     $error_message = urlencode($e->getMessage());
-    header('Location: '.getenv('APP_HOST').'error.php?code=500&message=' . $error_message);
+    header('Location: error.php?code=500&message=' . $error_message);
     exit();
 }
