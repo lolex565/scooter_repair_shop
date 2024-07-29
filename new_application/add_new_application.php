@@ -56,10 +56,7 @@
         }
 
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "repair_shop";
+        include('../utils/get_db_conf.php');
 
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

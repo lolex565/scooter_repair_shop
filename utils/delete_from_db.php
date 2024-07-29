@@ -1,7 +1,6 @@
 <?php
 
     function delete_from_db($table, $id) {
-        require('is_logged_in.php');
 
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

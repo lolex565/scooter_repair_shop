@@ -12,7 +12,7 @@
     <?php
         require('utils/is_logged_in.php');
         echo "<h1>Witaj ".htmlspecialchars($_SESSION['username'])."</h1>";
-        if (getenv('APP_ENV')){
+        if (getenv('APP_ENV') && $_SESSION['is_admin']) {
             echo "<h1>Aktywny tryb środowiska aplikacji: ".getenv('APP_ENV')."</h1>";
         }
         if ($_SESSION['is_admin']) {
