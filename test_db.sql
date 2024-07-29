@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Lip 17, 2024 at 01:06 PM
+-- Generation Time: Lip 29, 2024 at 08:58 AM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `id_2` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=501 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=510 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `client`
@@ -543,7 +543,16 @@ INSERT INTO `client` (`id`, `name`, `phone`) VALUES
 (497, 'Urszula Włodarczyk', '959973289'),
 (498, 'Olga Kozłowska', '777 770 041'),
 (499, 'Olga Nowak', '872 358 534'),
-(500, 'Patrycja Sikorska', '+83 298 312 3818');
+(500, 'Patrycja Sikorska', '+83 298 312 3818'),
+(501, 'Kamil Ślimak', '123456789'),
+(502, 'Duet Zezowaty', '2137 420 69'),
+(503, 'Oliwia', '111 222 333'),
+(504, 'JAN', '555555555'),
+(505, 'JAN', '555555555'),
+(506, 'JAN', '555555555'),
+(507, 'JAN', '555555555'),
+(508, 'JAN', '555555555'),
+(509, 'ANNA', '555555555');
 
 -- --------------------------------------------------------
 
@@ -586,6 +595,7 @@ INSERT INTO `dealer` (`id`, `name`, `phone`) VALUES
 (20, 'Kalinowska S.A.', '928216798');
 
 -- --------------------------------------------------------
+
 
 --
 -- Struktura tabeli dla tabeli `scooter`
@@ -860,6 +870,32 @@ INSERT INTO `scooter` (`id`, `make`, `model`, `frame_number`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(30) NOT NULL,
+  `hashed_password` varchar(255) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `hashed_password`, `active`, `is_admin`) VALUES
+(1, 'admin', '$2y$10$B5/rBTjNyBprmdM2eCbZxOa0ZD4zLor8jCqXKwujzRJAKRjFgDjSu', 1, 1),
+(2, 'user', '$2y$10$LQ3q8.cpND72ZrhL9XEP/uZqfORuZ5nDj0KNCbKndCX46nh/ZXgbS', 1, 0);
+
+--
+-- Constraints for dumped tables
+--
+
+--
 -- Struktura tabeli dla tabeli `repair_application`
 --
 
@@ -877,22 +913,20 @@ CREATE TABLE IF NOT EXISTS `repair_application` (
   KEY `scooter_id` (`scooter_id`),
   KEY `client_id` (`client_id`),
   KEY `dealer_id` (`dealer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1006 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `repair_application`
 --
 
 INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, `date_created`, `date_changed`, `description`, `status`) VALUES
-(1, 106, 464, 18, '1984-11-13 08:19:55', '1999-10-31 04:05:05', 'Fugit iste temporibus et et ut placeat eius. Eligendi voluptatem soluta aut optio. Fugiat ut cum sed ut ea delectus.', 'finished'),
-(2, 67, 195, 6, '1979-02-25 16:33:38', '2003-01-16 04:06:17', 'Quia quasi quia iste aliquam repellat totam et ipsum. Aperiam voluptatum omnis error a ratione dolor. Eum eos deserunt explicabo voluptas quo non voluptatem.', 'received'),
+(2, 67, 195, 6, '1979-02-25 00:00:00', '2024-07-29 08:57:25', 'Quia quasi quia iste aliquam repellat totam et ipsum. Aperiam voluptatum omnis error a ratione dolor. Eum eos deserunt explicabo voluptas quo non voluptatem.dsada', 'finished'),
 (3, 200, 495, 2, '1974-07-03 10:48:12', '1992-08-25 16:41:33', 'Impedit quia accusamus dolor consequuntur. Ea aut labore porro et accusamus illo quod ex. Provident animi aliquam magnam. Aspernatur inventore quaerat et praesentium et. Voluptatum dolorum eveniet deserunt repellendus.', 'received'),
 (4, 8, 106, 1, '2023-04-27 18:50:04', '1980-02-23 04:40:26', 'Fugit voluptatum quam possimus tempore iste harum sunt. Praesentium in pariatur est impedit cupiditate provident vel. Architecto architecto ipsa blanditiis perspiciatis itaque.', 'received'),
 (5, 222, 165, 13, '1995-02-24 08:54:53', '2022-01-14 06:41:50', 'Quo consequatur molestiae qui praesentium nostrum mollitia autem. Mollitia exercitationem natus omnis perferendis sint asperiores. Harum odit ex corrupti et deleniti eius.', 'created'),
 (6, 250, 43, 14, '1980-08-26 15:35:48', '2003-07-26 03:13:43', 'Cum debitis placeat autem. Odit qui qui qui culpa velit eaque optio. Explicabo omnis minus quibusdam labore consequatur dolor soluta veniam. Qui quae ex praesentium non.', 'in_progress'),
 (7, 147, 70, 12, '1983-04-12 23:15:16', '2010-03-01 10:21:51', 'Molestias qui aut est. Beatae placeat non totam praesentium aperiam. Beatae officiis doloribus ex reprehenderit. Quia ducimus autem expedita sit hic illum.', 'in_progress'),
 (8, 185, 152, 12, '2003-08-05 01:12:27', '2006-11-24 23:07:34', 'In earum deserunt dolorem deleniti. Dicta temporibus eligendi non alias recusandae eos est. Earum soluta esse dolore ut omnis repellat.', 'created'),
-(9, 127, 352, 16, '2004-09-17 06:25:08', '2008-02-21 13:07:04', 'Id animi ea et eius. Quo nam aut quas doloribus ipsam porro consequatur.', 'finished'),
 (10, 9, 455, 15, '1988-12-30 19:54:47', '2008-02-13 00:55:23', 'Non ut eius omnis tempora rem omnis quo. Nulla omnis omnis autem qui quisquam sint inventore et. Et adipisci ut aut non sed qui consequuntur. Minima voluptas in et eos. Ratione nemo consequatur alias et odit.', 'in_progress'),
 (11, 196, 9, 16, '2006-11-28 12:18:32', '2011-03-25 16:35:39', 'Voluptas repellendus numquam velit animi. Perspiciatis quia et modi quae autem. Maxime quasi sit nihil rerum eum molestiae repellat.', 'created'),
 (12, 201, 488, 6, '2009-07-25 16:23:58', '2020-10-03 13:49:29', 'Ipsam quasi vel molestiae est tempora vel quam quo. Placeat debitis deserunt repellendus expedita. Vero in corrupti eos enim vitae laudantium id.', 'in_progress'),
@@ -1034,7 +1068,7 @@ INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, 
 (148, 142, 345, 13, '1982-02-26 15:47:22', '1989-10-22 01:35:10', 'Beatae deleniti recusandae nihil voluptatem. Tempora et vel minus similique.', 'in_progress'),
 (149, 172, 188, 16, '1987-05-05 22:15:36', '1983-09-12 10:54:06', 'Vero nihil ut in vero commodi. Ducimus nihil iusto doloribus sunt excepturi provident. Et exercitationem aut reiciendis in placeat nam laborum. Illo et ex vitae quia.', 'created'),
 (150, 100, 64, 7, '2016-01-01 04:24:26', '2007-05-03 12:41:53', 'Quidem nulla voluptatem reiciendis provident earum et qui. Earum consectetur a sint nihil amet placeat. Dolorem magnam incidunt quos quia illum autem quia laudantium. Quia maiores modi cum deserunt ut odio.', 'in_progress'),
-(151, 226, 204, 6, '1972-10-25 20:08:37', '1976-10-12 23:09:28', 'Voluptas id quia blanditiis dolorum. Omnis accusamus tempore ut maxime dolore nihil deserunt. Et repellat qui sequi asperiores ratione consequatur ut commodi.', 'finished'),
+(151, 226, 204, 6, '1972-10-25 20:08:37', '2024-07-19 12:13:35', 'Voluptas id quia blanditiis dolorum. Omnis accusamus tempore ut maxime dolore nihil deserunt. Et repellat qui sequi asperiores ratione consequatur ut commodi.', 'received'),
 (152, 28, 122, 15, '2024-07-03 02:57:14', '1981-07-30 00:10:38', 'Iste sapiente itaque enim aut quaerat atque. Nisi atque vitae dolorum est. Unde in et id eius.', 'received'),
 (153, 129, 98, 14, '2014-06-29 11:35:58', '2003-07-31 18:50:15', 'Quas aut eaque sed consequatur est. Quo pariatur quia est qui repudiandae recusandae provident. Ut adipisci et laboriosam et sit. Laudantium modi sed dicta.', 'in_progress'),
 (154, 249, 378, 1, '1985-02-03 03:20:24', '2014-09-07 02:57:10', 'Voluptatibus reiciendis dolorem modi sed repellat. Ea amet facilis rerum eius quas voluptatum quis consequatur.', 'in_progress'),
@@ -1094,9 +1128,9 @@ INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, 
 (208, 84, 24, 17, '2013-09-14 19:26:56', '2014-02-20 12:23:57', 'Similique quasi dolorem similique laborum maiores nemo eos. Minus tempore aut fugit laboriosam adipisci. Minus totam et consectetur totam consequuntur alias fugiat. Dolorem nihil nesciunt accusamus blanditiis deleniti porro cum. Ipsam nam accusamus rerum iure exercitationem ducimus excepturi.', 'created'),
 (209, 210, 233, 17, '2015-07-26 19:45:59', '1979-02-22 01:36:14', 'Corporis deserunt aut ut quo vel nam maiores. Nihil dicta neque voluptate unde. Assumenda ut et quia.', 'in_progress'),
 (210, 39, 285, 16, '2017-02-24 16:05:51', '1983-03-28 14:11:11', 'Nemo accusamus hic similique laudantium. Vel praesentium quos aperiam dicta. Omnis et repudiandae adipisci dolore et ratione quasi est. Ea quos dolorem voluptatem assumenda.', 'in_progress'),
-(211, 174, 243, 19, '2000-02-20 03:21:53', '1991-11-19 03:48:21', 'Quaerat sunt pariatur ratione blanditiis rerum dolores harum eveniet. Eaque earum eaque illum. Mollitia vel autem totam.', 'created');
+(211, 174, 243, 19, '2000-02-20 03:21:53', '1991-11-19 03:48:21', 'Quaerat sunt pariatur ratione blanditiis rerum dolores harum eveniet. Eaque earum eaque illum. Mollitia vel autem totam.', 'created'),
+(212, 205, 382, 7, '2018-12-11 21:32:50', '2014-03-12 07:18:53', 'Iusto molestias autem autem provident autem illum. Consequatur delectus ea voluptate possimus sint iste labore. Amet earum repellendus error cupiditate perferendis quos.', 'finished');
 INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, `date_created`, `date_changed`, `description`, `status`) VALUES
-(212, 205, 382, 7, '2018-12-11 21:32:50', '2014-03-12 07:18:53', 'Iusto molestias autem autem provident autem illum. Consequatur delectus ea voluptate possimus sint iste labore. Amet earum repellendus error cupiditate perferendis quos.', 'finished'),
 (213, 151, 272, 5, '2021-10-06 05:52:02', '1984-07-16 14:07:39', 'Ullam corrupti tempora fugiat. Qui est placeat veritatis ut nobis ut. Recusandae ut nihil eaque quod et.', 'received'),
 (214, 243, 498, 15, '1976-06-07 01:39:25', '2008-06-24 04:38:52', 'Eum voluptas quis autem saepe magni quo dolor. Inventore voluptas et et. Doloremque corporis modi aliquam quaerat enim. Eaque dignissimos eligendi et voluptate veritatis.', 'created'),
 (215, 125, 313, 6, '1981-08-29 22:27:53', '2013-02-05 23:54:38', 'Vel rem assumenda animi quia aspernatur. Et neque explicabo consectetur iste laborum doloribus odit sapiente. Ullam dolorum saepe consequatur fugiat tempora hic.', 'finished'),
@@ -1303,9 +1337,9 @@ INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, 
 (416, 20, 271, 7, '1984-08-29 10:14:14', '1970-06-22 12:02:52', 'Hic aliquid non consequuntur tenetur ipsam animi aspernatur. Est quis explicabo et. Atque autem recusandae iste aut voluptatem maxime occaecati ab. Et eligendi magnam officia tenetur suscipit rerum laboriosam vitae.', 'finished'),
 (417, 59, 305, 1, '2014-12-23 18:21:41', '2016-12-12 04:55:16', 'Soluta quidem vel iusto enim itaque aut. Facilis iste saepe explicabo aut. Et ut qui in molestias qui et rem distinctio.', 'created'),
 (418, 46, 403, 16, '2009-06-19 18:59:31', '2010-03-26 11:22:03', 'Ipsa numquam excepturi iure inventore quisquam id qui. Ad aspernatur ab deserunt aut aut sit eos. Qui beatae quos dicta suscipit illo pariatur debitis. Nesciunt qui natus molestiae.', 'received'),
-(419, 10, 14, 18, '1998-03-31 13:05:35', '1982-03-08 07:25:50', 'Dolorum minima magnam et aut et molestias impedit. Reprehenderit enim corrupti accusamus est nesciunt facere. Incidunt similique omnis doloribus optio. Dolorem quisquam explicabo dignissimos repellat ut.', 'received');
+(419, 10, 14, 18, '1998-03-31 13:05:35', '1982-03-08 07:25:50', 'Dolorum minima magnam et aut et molestias impedit. Reprehenderit enim corrupti accusamus est nesciunt facere. Incidunt similique omnis doloribus optio. Dolorem quisquam explicabo dignissimos repellat ut.', 'received'),
+(420, 68, 370, 13, '1975-08-06 04:40:11', '1994-09-18 08:08:09', 'Ea eaque quas consequuntur aut ex atque aut sed. Assumenda repudiandae in perspiciatis numquam. Et odio est rerum aut quo omnis. Dolores voluptas voluptatibus iure animi dolor.', 'finished');
 INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, `date_created`, `date_changed`, `description`, `status`) VALUES
-(420, 68, 370, 13, '1975-08-06 04:40:11', '1994-09-18 08:08:09', 'Ea eaque quas consequuntur aut ex atque aut sed. Assumenda repudiandae in perspiciatis numquam. Et odio est rerum aut quo omnis. Dolores voluptas voluptatibus iure animi dolor.', 'finished'),
 (421, 187, 486, 17, '2001-08-21 16:50:29', '1971-07-06 04:28:54', 'Voluptatem aut veritatis ut saepe similique est neque. Est quod unde et perspiciatis et. Et natus et harum at. Aut rem repellat accusamus aperiam. Molestiae impedit molestiae aut id sed.', 'received'),
 (422, 127, 70, 16, '2010-07-23 21:18:54', '1992-03-06 06:28:07', 'Voluptas consequatur deserunt ad aut commodi suscipit tempore. Iure numquam tempore et reiciendis consequatur ipsam consequatur. Rerum sed placeat laudantium cupiditate dicta vero numquam. Hic dolorem eum et in.', 'in_progress'),
 (423, 26, 135, 5, '2000-05-27 20:10:21', '2018-10-11 14:21:16', 'Omnis atque amet qui illum. Rerum placeat nisi delectus delectus. Tempora laborum a sequi sint ratione vero maiores. Voluptatem fuga commodi sint et.', 'received'),
@@ -1386,7 +1420,6 @@ INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, 
 (498, 59, 30, 11, '1981-01-04 17:06:40', '2006-09-24 08:49:03', 'Aut suscipit neque nostrum ut. Qui aperiam ut architecto assumenda placeat. Optio omnis voluptatum repellendus. Voluptatem non vitae laboriosam.', 'finished'),
 (499, 137, 295, 2, '2020-11-02 11:14:05', '1979-07-06 17:09:34', 'Totam velit dolores et alias. Laboriosam sit consequatur unde unde non accusantium. Molestiae tenetur incidunt provident dolor voluptatem sed.', 'created'),
 (500, 233, 41, 5, '1992-07-31 20:37:16', '2004-05-13 04:08:02', 'Voluptas consectetur nesciunt beatae laboriosam et vitae. Est atque consequatur occaecati corporis est recusandae. Et optio qui aut dolorum adipisci ab. Dolores expedita repellat et.', 'received'),
-(501, 210, 497, 11, '2022-12-30 23:48:51', '1973-06-13 05:46:28', 'Sed quia architecto perspiciatis est illum. Blanditiis ab ut unde quia qui iusto fugiat. Voluptatem sed accusantium in. Sit atque eligendi aut consequatur. Repellendus libero nostrum cupiditate illum suscipit necessitatibus voluptatum voluptas.', 'in_progress'),
 (502, 55, 191, 2, '2012-06-25 05:11:40', '2003-06-13 09:19:14', 'Laborum aliquam doloribus ut odit. Delectus quidem eum eum est et. Corporis aut neque sit. Quisquam veniam corporis dicta quisquam possimus amet qui quia. Hic accusantium quasi fugit ut porro rem.', 'in_progress'),
 (503, 209, 234, 19, '2002-05-04 07:40:43', '2009-09-28 07:49:06', 'Officia architecto fuga sit. Voluptatibus deserunt quia sit deserunt non neque consectetur. Est adipisci animi fugiat corrupti et architecto vero quia. Nobis autem blanditiis voluptatem dolorem aut numquam sunt.', 'created'),
 (504, 28, 3, 1, '1970-06-24 05:58:05', '2006-10-11 14:00:38', 'Tempore qui repellendus fuga ut ex et neque. Sit repellendus cupiditate distinctio distinctio eaque aperiam. Aut consectetur nostrum quae quia rem quaerat eligendi ad. Ut voluptas itaque alias debitis quibusdam dolorum.', 'received'),
@@ -1512,11 +1545,11 @@ INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, 
 (624, 155, 16, 15, '1983-02-15 18:29:29', '2015-12-08 10:55:20', 'Est ex minus aut at nobis. Et soluta aut excepturi facere molestias id.', 'in_progress'),
 (625, 228, 452, 4, '1973-12-07 13:41:16', '2014-11-28 14:07:18', 'Rem aut vel laboriosam est necessitatibus molestiae. Quasi dolor quibusdam cupiditate. Praesentium veritatis quo nemo totam fugiat quia voluptatum. Commodi hic et quos rerum accusamus. Quam ullam culpa laboriosam et in ipsa voluptates.', 'in_progress'),
 (626, 136, 95, 11, '2015-12-28 04:57:57', '1991-02-03 16:51:25', 'Eligendi in iusto voluptas aut aut corporis perspiciatis. Occaecati commodi nostrum veritatis optio dolores.', 'created'),
-(627, 162, 394, 18, '2003-01-14 01:33:33', '2018-07-15 22:07:48', 'Est repellat hic nihil. Amet quis qui quis qui quam. Qui at sequi quis quis. Laborum dolor architecto dolore pariatur quia alias.', 'created');
-INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, `date_created`, `date_changed`, `description`, `status`) VALUES
+(627, 162, 394, 18, '2003-01-14 01:33:33', '2018-07-15 22:07:48', 'Est repellat hic nihil. Amet quis qui quis qui quam. Qui at sequi quis quis. Laborum dolor architecto dolore pariatur quia alias.', 'created'),
 (628, 176, 474, 12, '2004-06-28 08:21:55', '1988-09-17 12:13:38', 'Totam facilis quis incidunt odit ea consequatur est ut. Sit dolorem ipsam porro minima reprehenderit non. Qui pariatur accusantium et alias sit asperiores. Quo possimus a ipsa pariatur est ut eos.', 'created'),
 (629, 209, 453, 13, '1986-03-14 11:53:25', '2022-10-13 04:34:10', 'Tempora at vero natus nihil. Qui est assumenda eveniet et aut et. Et dolor et dolorem rerum. Animi quis consequatur saepe.', 'received'),
-(630, 77, 59, 3, '1982-12-23 13:10:01', '2022-09-22 10:15:33', 'Repellendus consequatur dolores ab quia porro dolore error. Quod beatae deserunt aliquam ipsam. Quam nobis officia nostrum. Ipsum doloribus est quia omnis rerum esse facilis possimus.', 'received'),
+(630, 77, 59, 3, '1982-12-23 13:10:01', '2022-09-22 10:15:33', 'Repellendus consequatur dolores ab quia porro dolore error. Quod beatae deserunt aliquam ipsam. Quam nobis officia nostrum. Ipsum doloribus est quia omnis rerum esse facilis possimus.', 'received');
+INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, `date_created`, `date_changed`, `description`, `status`) VALUES
 (631, 145, 233, 8, '2000-02-22 01:06:07', '1981-03-24 14:38:53', 'Et eum voluptas tenetur et harum consequuntur aliquid autem. Voluptas quod tenetur alias fugiat voluptatem omnis. Hic aperiam in eum quam error sapiente nobis. Similique est sit rem voluptatibus nostrum minus aliquam. Quia id et aut laudantium et magnam.', 'received'),
 (632, 249, 394, 18, '1994-07-08 23:49:59', '2002-01-18 22:41:29', 'Totam repellat nostrum adipisci aut assumenda laborum. Et voluptate officia saepe odit ea provident est. Occaecati qui molestiae et debitis. Quod accusamus et repudiandae dolorem eius iure in. Debitis rerum ipsum accusamus sapiente et ipsa nemo praesentium.', 'finished'),
 (633, 155, 276, 4, '2003-04-26 03:34:39', '2002-03-13 03:34:50', 'Porro itaque vel fuga vel aliquam est qui omnis. Excepturi sequi nobis laborum atque doloremque. Deleniti labore quidem et autem. Et eaque qui assumenda consectetur quisquam dolorum consequatur alias.', 'received'),
@@ -1725,12 +1758,12 @@ INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, 
 (836, 148, 198, 1, '1972-03-04 03:52:53', '2021-10-29 06:43:31', 'Fuga rem a eligendi. Deleniti vitae explicabo repellat unde aut. Enim et quo voluptas doloribus provident.', 'in_progress'),
 (837, 71, 203, 10, '1996-08-10 22:03:36', '1976-10-21 12:10:55', 'Facere consequatur ullam explicabo architecto eos perferendis qui. Commodi quisquam eum repellendus distinctio reprehenderit porro. Eius et necessitatibus non rem.', 'received'),
 (838, 23, 91, 2, '1970-09-16 22:54:50', '2009-12-15 01:44:55', 'Et maxime placeat cum quia accusantium harum sequi. Inventore molestiae aut tempora alias cumque facilis. Incidunt nam et natus facere sunt. Libero ratione veniam iusto officiis.', 'received'),
-(839, 43, 426, 15, '2007-11-25 20:29:43', '2010-04-16 20:00:53', 'Et possimus voluptatem totam error incidunt. At voluptatem in enim nisi. A sint cumque asperiores eos. Eos temporibus voluptatem voluptatum.', 'finished');
-INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, `date_created`, `date_changed`, `description`, `status`) VALUES
+(839, 43, 426, 15, '2007-11-25 20:29:43', '2010-04-16 20:00:53', 'Et possimus voluptatem totam error incidunt. At voluptatem in enim nisi. A sint cumque asperiores eos. Eos temporibus voluptatem voluptatum.', 'finished'),
 (840, 221, 207, 7, '2006-02-02 06:35:43', '1984-11-06 09:33:11', 'Blanditiis non quia culpa. Dolore doloribus debitis dolorum eius quia delectus recusandae.', 'created'),
 (841, 31, 434, 19, '1993-12-29 14:40:04', '1979-02-09 20:57:48', 'Assumenda nobis est rem quam deleniti. Dolores earum id ratione beatae ut. Autem nemo accusamus quia in cum.', 'in_progress'),
 (842, 110, 159, 17, '1993-07-17 17:48:42', '1977-08-24 17:24:56', 'Non natus dolor ipsa numquam. Et magnam maxime maiores qui ipsam et maxime. Et enim eum id. Minima corporis atque fugiat sed tempora id ad.', 'received'),
-(843, 186, 127, 14, '2001-02-23 06:10:59', '2001-09-04 19:25:18', 'Sed error ut numquam enim voluptates. Deleniti reiciendis repellat commodi occaecati est omnis. Molestiae animi ipsum velit facere non vitae.', 'in_progress'),
+(843, 186, 127, 14, '2001-02-23 06:10:59', '2001-09-04 19:25:18', 'Sed error ut numquam enim voluptates. Deleniti reiciendis repellat commodi occaecati est omnis. Molestiae animi ipsum velit facere non vitae.', 'in_progress');
+INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, `date_created`, `date_changed`, `description`, `status`) VALUES
 (844, 28, 308, 18, '2011-04-19 19:18:49', '2004-06-05 18:52:59', 'Voluptas vel doloribus quia maxime sit nisi dolorum veniam. Tempora id quisquam cum est. Maxime autem explicabo rerum est. Velit quia perspiciatis fugiat explicabo consequuntur nam et odio.', 'created'),
 (845, 237, 455, 15, '2013-10-10 07:50:52', '2024-03-28 04:26:16', 'Laboriosam voluptas soluta omnis. Dolorem maiores voluptatem ut in voluptas. A explicabo quam et in fugit vel. Quidem dolores ut veritatis dolorem explicabo. Sequi quod ipsam distinctio commodi dolor impedit porro.', 'in_progress'),
 (846, 250, 197, 4, '1983-09-03 13:35:55', '2019-12-01 15:55:09', 'Quae modi eveniet ut quo numquam eum odit eos. Aut sint consequatur nemo praesentium. Quos unde minima quia esse voluptatum voluptatem dicta dolorem. Voluptatum hic saepe officia.', 'finished'),
@@ -1887,13 +1920,15 @@ INSERT INTO `repair_application` (`id`, `scooter_id`, `client_id`, `dealer_id`, 
 (997, 192, 85, 1, '2005-11-01 15:38:25', '2008-01-17 16:42:53', 'Aspernatur ut sed velit id impedit reiciendis. Et nemo iure suscipit est voluptates impedit. Rerum corporis facere est expedita libero quisquam.', 'finished'),
 (998, 156, 250, 20, '2011-09-15 22:45:21', '1994-03-17 14:26:00', 'Autem asperiores cupiditate fuga quis. Facere similique dolores id dolor ut sed.', 'received'),
 (999, 70, 456, 17, '2018-07-18 09:25:05', '1979-05-05 07:22:54', 'Autem est dolores nesciunt dolore saepe ipsum inventore. Quis natus sed occaecati fuga. Perferendis et quia sit itaque veritatis voluptatem.', 'in_progress'),
-(1000, 90, 488, 19, '1986-09-24 17:00:35', '1997-01-22 13:44:31', 'Cupiditate iste soluta delectus accusamus et qui quibusdam. Sit fugiat totam recusandae qui aut libero. Sit laudantium voluptatem architecto distinctio temporibus unde dolorum.', 'received');
+(1000, 90, 488, 19, '1986-09-24 17:00:35', '1997-01-22 13:44:31', 'Cupiditate iste soluta delectus accusamus et qui quibusdam. Sit fugiat totam recusandae qui aut libero. Sit laudantium voluptatem architecto distinctio temporibus unde dolorum.', 'received'),
+(1001, 3, 32, 3, '2024-07-18 12:44:57', '2024-07-18 12:44:57', 'asdasd', 'created'),
+(1002, 3, 32, 3, '2024-07-04 00:00:00', '2024-07-18 12:46:06', 'ea', 'created'),
+(1003, 3, 2, 19, '2024-07-01 00:00:00', '2024-07-18 14:04:15', 'umarło', 'created'),
+(1004, 122, 3, 14, '2024-07-04 00:00:00', '2024-07-18 16:43:37', 'alloooo', 'created'),
+(1005, 3, 76, 18, '2024-07-10 00:00:00', '2024-07-25 10:19:22', 'adasdsada', 'created');
 
+-- --------------------------------------------------------
 
-
---
--- Constraints for dumped tables
---
 
 --
 -- Constraints for table `repair_application`

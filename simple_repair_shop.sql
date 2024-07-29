@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Lip 17, 2024 at 01:07 PM
+-- Generation Time: Lip 29, 2024 at 09:01 AM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -30,13 +30,10 @@ USE `repair_shop`;
 -- Struktura tabeli dla tabeli `client`
 --
 
-CREATE TABLE IF NOT EXISTS `client` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `client` (
+  `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `phone` varchar(18) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  KEY `id_2` (`id`)
+  `phone` varchar(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -45,12 +42,10 @@ CREATE TABLE IF NOT EXISTS `client` (
 -- Struktura tabeli dla tabeli `dealer`
 --
 
-CREATE TABLE IF NOT EXISTS `dealer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `dealer` (
+  `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `phone` varchar(18) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
+  `phone` varchar(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -59,20 +54,15 @@ CREATE TABLE IF NOT EXISTS `dealer` (
 -- Struktura tabeli dla tabeli `repair_application`
 --
 
-CREATE TABLE IF NOT EXISTS `repair_application` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `repair_application` (
+  `id` int(11) NOT NULL,
   `scooter_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
   `dealer_id` int(11) NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_changed` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `description` text NOT NULL,
-  `status` enum('created','received','in_progress','finished') NOT NULL DEFAULT 'created',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  KEY `scooter_id` (`scooter_id`),
-  KEY `client_id` (`client_id`),
-  KEY `dealer_id` (`dealer_id`)
+  `status` enum('created','received','in_progress','finished') NOT NULL DEFAULT 'created'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -81,15 +71,104 @@ CREATE TABLE IF NOT EXISTS `repair_application` (
 -- Struktura tabeli dla tabeli `scooter`
 --
 
-CREATE TABLE IF NOT EXISTS `scooter` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `scooter` (
+  `id` int(11) NOT NULL,
   `make` varchar(20) NOT NULL,
   `model` varchar(30) NOT NULL,
-  `frame_number` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `frame_number` (`frame_number`),
-  UNIQUE KEY `id` (`id`)
+  `frame_number` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `hashed_password` varchar(255) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Indeksy dla zrzutów tabel
+--
+
+--
+-- Indeksy dla tabeli `client`
+--
+ALTER TABLE `client`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `id_2` (`id`);
+
+--
+-- Indeksy dla tabeli `dealer`
+--
+ALTER TABLE `dealer`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indeksy dla tabeli `repair_application`
+--
+ALTER TABLE `repair_application`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `scooter_id` (`scooter_id`),
+  ADD KEY `client_id` (`client_id`),
+  ADD KEY `dealer_id` (`dealer_id`);
+
+--
+-- Indeksy dla tabeli `scooter`
+--
+ALTER TABLE `scooter`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `frame_number` (`frame_number`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indeksy dla tabeli `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `client`
+--
+ALTER TABLE `client`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `dealer`
+--
+ALTER TABLE `dealer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `repair_application`
+--
+ALTER TABLE `repair_application`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `scooter`
+--
+ALTER TABLE `scooter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
