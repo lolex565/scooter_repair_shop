@@ -55,6 +55,6 @@ try {
     }
 } catch (mysqli_sql_exception $e) {
     $error_message = urlencode($e->getMessage());
-    header('Location: error.php?code=500&message=' . $error_message);
+    header('Location: /error.php?code=500&message=' . $error_message);
     exit();
 }

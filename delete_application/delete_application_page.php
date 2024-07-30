@@ -19,7 +19,7 @@
     if (!$_SESSION['is_admin']) {
         $message = urlencode("Nie masz uprawnień do usunięcia zgłoszenia");
         $code = 401;
-        header("Location: error.php?message=$message&code=$code");
+        header("Location: /error.php?message=$message&code=$code");
     }
     $application_id = $_POST['id'];
     $application = get_application_by_id($application_id);
@@ -27,7 +27,7 @@
     if ($application == null) {
         $message = urlencode("Nie ma zgłoszenia o podanym id");
         $code = 404;
-        header("Location: error.php?message=$message&code=$code");
+        header("Location: /error.php?message=$message&code=$code");
     }
 
     echo "<h1>Usunięcie zgłoszenia</h1>";

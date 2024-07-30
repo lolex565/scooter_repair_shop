@@ -44,7 +44,7 @@ try {
             $error_message = urlencode($stmt->error);
             $stmt->close();
             $conn->close();
-            header('Location: error.php?code=500&message='.$error_message);
+            header('Location: /error.php?code=500&message='.$error_message);
             exit(); // Make sure to exit after the header redirection
         }
     } else {
@@ -54,7 +54,7 @@ try {
 } catch (mysqli_sql_exception $e) {
     $error_message = urlencode($e->getMessage());
     $conn->close();
-    header('Location: error.php?code=500&message='.$error_message);
+    header('Location: /error.php?code=500&message='.$error_message);
     exit(); // Make sure to exit after the header redirection
 }
 
