@@ -58,6 +58,7 @@
                     echo "<td><select name='status'>";
                     echo "<option value='created' ".($application['application_status'] == 'created' ? 'selected' : '').">Utworzone</option>";
                     echo "<option value='received' ".($application['application_status'] == 'received' ? 'selected' : '').">Przyjęte</option>";
+                    echo "<option value='service_wwa' ".($application['application_status'] == 'service_wwa' ? 'selected' : '').">Serwis WWA</option>";
                     echo "<option value='in_progress' ".($application['application_status'] == 'in_progress' ? 'selected' : '').">W trakcie</option>";
                     echo "<option value='finished' ".($application['application_status'] == 'finished' ? 'selected' : '').">Zakończone</option>";
                     echo "</select></td>";

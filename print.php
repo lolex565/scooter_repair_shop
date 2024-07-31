@@ -41,6 +41,9 @@
                     case "received":
                         echo "odebrano";
                         break;
+                    case "service_wwa":
+                        echo "serwis w Warszawie";
+                        break;
                     case "in_progress":
                         echo "w trakcie";
                         break;
