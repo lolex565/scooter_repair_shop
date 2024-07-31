@@ -31,8 +31,9 @@
                 echo "<tr><td>Marka</td><td>".$application['scooter_make']."</td></tr>";
                 echo "<tr><td>Model</td><td>".$application['scooter_model']."</td></tr>";
                 echo "<tr><td>Nr ramy</td><td>".$application['scooter_frame_number']."</td></tr>";
-                echo "<tr><td>Data zgłoszenia</td><td>".$application['application_date_created']."</td></tr>";
-                echo "<tr><td>Data edycji</td><td>".$application['application_date_changed']."</td></tr>";
+                echo "<tr><td>Data zakupu</td><td>".$application['scooter_date_of_purchase']."</td></tr>";
+                echo "<tr><td>Data zgłoszenia</td><td>".explode(" ",$application['application_date_created'])[0]."</td></tr>";
+                echo "<tr><td>Data edycji</td><td>".explode(" ", $application['application_date_changed'])[0]."</td></tr>";
                 echo "<tr><td>Status</td><td>";
                 switch ($application['application_status']) {
                     case "created":

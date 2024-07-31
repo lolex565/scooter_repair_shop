@@ -10,7 +10,7 @@
     <?php
     require('../utils/is_logged_in.php');
 
-    if (!isset($_POST['scooter_make']) || !isset($_POST['scooter_model']) || !isset($_POST['frame_number'])) {
+    if (!isset($_POST['scooter_make']) || !isset($_POST['scooter_model']) || !isset($_POST['frame_number']) || !isset($_POST['date_of_purchase'])) {
         header('Location: scooter_chooser.php');
         exit();
     }
@@ -25,6 +25,7 @@
     $scooter_make = $_POST['scooter_make'];
     $scooter_model = $_POST['scooter_model'];
     $frame_number = $_POST['frame_number'];
+    $date_of_purchase = $_POST['date_of_purchase'];
 
     include('../utils/get_db_conf.php');
 
@@ -42,9 +43,9 @@
             exit(); // Make sure to exit after the header redirection
         }
 
-        $stmt = $conn->prepare("INSERT INTO `scooter` (`make`, `model`, `frame_number`) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO `scooter` (`make`, `model`, `frame_number`, `date_of_purchase`) VALUES (?, ?, ?, ?)");
 
-        $stmt->bind_param("sss", $scooter_make, $scooter_model, $frame_number);
+        $stmt->bind_param("ssss", $scooter_make, $scooter_model, $frame_number, $date_of_purchase);
 
         $stmt->execute();
 
@@ -54,7 +55,7 @@
 
         $conn->close();
 
-        echo "<h1>Pomyślnie dodano hulajnogę: ".$scooter_make." ".$scooter_model." ".$frame_number."</h1>";
+        echo "<h1>Pomyślnie dodano hulajnogę: ".$scooter_make." ".$scooter_model." ".$frame_number." Kupioną: ".$date_of_purchase."</h1>";
         echo "<form action='dealer_chooser.php' method='post'>";
         echo "<input type='hidden' name='client_id' value='".$client_id."'>";
         echo "<input type='hidden' name='scooter_id' value='".$scooter_id."'>";

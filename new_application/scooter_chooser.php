@@ -106,6 +106,14 @@
                 <td><input required type="text" name="frame_number"></td>
             </tr>
             <tr>
+                <td>
+                    Data zakupu
+                </td>
+                <td>
+                    <input required type="date" name="date_of_purchase">
+                </td>
+            </tr>
+            <tr>
                 <td colspan="2"><input type="submit" value="Dodaj"></td>
             </tr>
         </table>
